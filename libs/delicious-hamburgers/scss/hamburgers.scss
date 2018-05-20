@@ -1,0 +1,133 @@
+/*!
+ * delicious-hamburgers
+ * @description Beautiful SASS powered hamburger menu toggle buttons
+ * @author Kasper Koman
+ * @link https://github.com/kapoko/delicious-hamburgers
+ */
+
+// Variables
+$hamburger-class-name:          'hamburger' !default;   
+$hamburger-size:                50px !default;
+$hamburger-thickness:           2px !default; 
+$hamburger-color:               #000 !default;
+$hamburger-color-active:        $hamburger-color !default;
+$hamburger-background:          transparent !default;
+$hamburger-background-active:   $hamburger-background !default;
+$hamburger-border-color:        transparent !default;
+$hamburger-border-width:        0 !default;
+$hamburger-opacity:             1 !default;
+$hamburger-opacity-hover:       1 !default;
+$hamburger-padding:             $hamburger-size / 10 !default;
+$hamburger-bar-spacing:         $hamburger-size / 5 !default;
+$hamburger-animation-speed:     1 !default;
+$hamburger-border-radius:       0 !default;
+
+// Animation types. Use this as a variable and remove the animations
+// you don't need so they won't get compiled in your css.
+$hamburger-animations: (
+    apple,
+    arrow,
+    arrow-r,
+    collapse,
+    converge,
+    criss-cross,
+    default,
+    dive,
+    minimal,
+    spin,
+    stack,
+    twist
+) !default;
+
+$hamburger-bar-size:        $hamburger-size - ($hamburger-padding * 2) - ($hamburger-border-width * 2);
+$hamburger-easing:          cubic-bezier(0.645, 0.045, 0.355, 1);
+
+// "Constants"
+$ROOT-TWO:                  1.41421356237309504880;
+
+// Hamburger base
+@mixin hamburger-bar() {
+    content: "";
+    width: 100%;
+    height: $hamburger-thickness;
+    display: block;
+    position: absolute;
+    background-color: $hamburger-color;
+    border-radius: $hamburger-border-radius;
+}
+
+button.#{$hamburger-class-name} {
+    width:  $hamburger-size;
+    height: $hamburger-size;    
+}
+
+div.#{$hamburger-class-name} {
+    width:  $hamburger-size - ($hamburger-border-width * 2);
+    height: $hamburger-size - ($hamburger-border-width * 2);
+
+    > .inner {
+        top: 50%;
+    }   
+}
+
+.#{$hamburger-class-name} {
+    background: $hamburger-background;
+    border: $hamburger-border-width $hamburger-border-color solid;
+    padding: $hamburger-padding;
+    display: inline-block;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    margin: 0;
+    overflow: visible;
+    opacity: $hamburger-opacity;
+    transition: opacity .2s $hamburger-easing, background .2s $hamburger-easing;
+
+    &.active {
+        background: $hamburger-background-active;
+
+        span.bar {
+            background-color: $hamburger-color-active;
+        }
+    }
+    
+    > .inner {
+        position: relative;
+        margin: 0;
+        width: 100%; //$hamburger-bar-size;
+        margin-top: -$hamburger-thickness / 2;
+    }
+
+    span.bar {
+        @include hamburger-bar();
+
+        &:nth-child(1) {
+            top: -$hamburger-bar-spacing;
+        }
+
+        &:nth-child(3) {
+            top: $hamburger-bar-spacing;
+        }
+    }
+    
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        opacity: $hamburger-opacity-hover;
+    }
+}
+
+@import 'animations/default';
+@import 'animations/criss-cross';
+@import 'animations/apple';
+@import 'animations/arrow';
+@import 'animations/spin';
+@import 'animations/collapse';
+@import 'animations/minimal';
+@import 'animations/dive';
+@import 'animations/stack';
+@import 'animations/converge';
+@import 'animations/twist';
