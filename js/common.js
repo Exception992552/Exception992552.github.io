@@ -1,34 +1,192 @@
 
 $(document).ready(function(){
 
+$(window).on('load',function(){
+	$('.preloader').delay(3000).fadeOut('slow');
+});
+
 $(".link-menu").mPageScroll2id();
 $(".hamburger").on('click', function(){
 $(this).toggleClass('active');
 });
-
-
-
-
-
-// $(".toggle-table").stop().click(function() {
-//  $(".toggle-block-table").slideToggle('slow');
-
-// });
-
-
-// $(".toggle-cupboard").click(function() {
-
-//  $(".toggle-block-cupboard").slideToggle('slow');
-// });
-
-// $(".button-back").click(function() {
-
-// $(".main-content").css('width','80%');
-// $(".main-nav").css('left', '0');
-// });
-
-
 });
+
+"use strict"
+
+b4w.register("b4w_npm_test", function(exports, require) {
+// импортируем необходимые модули
+var m_app       = b4w.require("app");
+var m_cfg       = b4w.require("config");
+var m_data      = b4w.require("data");
+var m_preloader = b4w.require("preloader");
+var m_trans = require("transform");
+var m_scene = require("scenes");
+
+var DEBUG = true;
+
+// задаем путь к ассетам
+var APP_ASSETS_PATH = "assets/";
+// задаем путь к физическому движку
+// m_cfg.set("physics_uranium_path", "node_modules/blend4web/dist/uranium/")
+
+/**
+ * экспортируем метод инициализации, который будет вызван в самом конце файла
+ */
+exports.init = init;
+function init() {
+    m_app.init({
+        canvas_container_id: "main_canvas_container",
+        callback: init_cb,
+        show_fps: false,
+        console_verbose: DEBUG,
+        autoresize: true
+    });
+}
+
+/**
+ * коллбэк вызывается когда приложение инициализировалось
+ */
+function init_cb(canvas_elem, success) {
+
+    if (!success) {
+        console.log("b4w init failure");
+        return;
+    }
+
+    m_preloader.create_preloader();
+
+    // игнорируем клик правой кнопкой мыши на элементе canvas
+    canvas_elem.oncontextmenu = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    };
+
+    load();
+}
+
+/**
+ * загрузка данных сцены
+ */
+function load() {
+    m_data.load(APP_ASSETS_PATH + "main.json", load_cb, preloader_cb);
+}
+
+/**
+ * обновление прелоадера
+ */
+function preloader_cb(percentage) {
+    m_preloader.update_preloader(percentage);
+}
+
+/**
+ * коллбэк вызывается когда сцена загружена
+ */
+function load_cb(data_id, success) {
+
+    if (!success) {
+        console.log("b4w load failure");
+        return;
+    }
+
+
+    m_app.enable_camera_controls();
+
+    // размещайте свой код здесь
+}
+})
+
+b4w.require("b4w_npm_test").init();
+
+
+// b4w.register("canvas1", function(exports, require) {
+
+// // import modules used by the app
+// var m_app       = require("app");
+// var m_cfg       = require("config");
+// var m_data      = b4w.require("data");
+// var m_preloader = b4w.require("preloader");
+// var DEBUG = true;
+
+// // задаем путь к ассетам
+// // var APP_ASSETS_PATH = "assets/";
+// // задаем путь к физическому движку
+// // m_cfg.set("physics_uranium_path", "node_modules/blend4web/dist/uranium/")
+
+// /**
+//  * экспортируем метод инициализации, который будет вызван в самом конце файла
+//  */
+// exports.init = init;
+// function init() {
+//     m_app.init({
+//         canvas_container_id: "main_canvas_container1",
+//         callback: init_cb,
+//         show_fps: false,
+//         console_verbose: DEBUG,
+//         autoresize: true
+//     });
+// }
+
+// function init_cb(canvas_elem, success) {
+
+//     if (!success) {
+//         console.log("b4w init failure");
+//         return;
+//     }
+
+//     m_preloader.create_preloader();
+
+//     // игнорируем клик правой кнопкой мыши на элементе canvas
+//     canvas_elem.oncontextmenu = function(e) {
+//         e.preventDefault();
+//         e.stopPropagation();
+//         return false;
+//     };
+
+//     load();
+// }
+
+// /**
+//  * загрузка данных сцены
+//  */
+// function load() {
+//     m_data.load("../assets/button.json", load_cb, preloader_cb);
+// }
+
+// /**
+//  * обновление прелоадера
+//  */
+// function preloader_cb(percentage) {
+//     m_preloader.update_preloader(percentage);
+// }
+
+// /**
+//  * коллбэк вызывается когда сцена загружена
+//  */
+// function load_cb(data_id, success) {
+
+//     if (!success) {
+//         console.log("b4w load failure");
+//         return;
+//     }
+
+//     m_app.enable_camera_controls();
+
+//     // размещайте свой код здесь
+// }
+// })
+// b4w.require("canvas1","canvas1").init();
+
+
+
+
+
+
+
+
+
+
+
 
 
 // "use strict"

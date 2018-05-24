@@ -40,8 +40,30 @@ var m_preloader = require("preloader");
 var m_scenes    = require("scenes");
 var m_trans     = require("transform");
 var m_util      = require("util");
+var m_vec3    	= require("vec3");
+var m_time    	= require("time");
+var m_quat 		= require("quat");
 
-var m_quat = require("quat");
+
+var ANIM_TIME = 2;
+
+var _anim_stop = false;
+var _delta_target = ANIM_TIME;
+var _cam_anim = {
+    timeline: -ANIM_TIME,
+    starting_eye: new Float32Array(3),
+    starting_target: new Float32Array(3),
+    final_eye: new Float32Array(3),
+    final_target: new Float32Array(3),
+    current_eye: new Float32Array(3),
+    current_target: new Float32Array(3)
+}
+
+var _vec3_tmp = new Float32Array(3);
+
+
+
+
 var OUTLINE_COLOR_VALID = [0, 1, 0];
 var OUTLINE_COLOR_ERROR = [1, 0, 0];
 var FLOOR_PLANE_NORMAL = [0, 1, 0];
@@ -83,6 +105,8 @@ exports.init = function() {
         alpha: false,
         background_color: [1.0, 1.0, 1.0, 0.0],
         show_fps: DEBUG,
+        assets_dds_available: !DEBUG,
+        assets_min50_available: !DEBUG,
         console_verbose: DEBUG,
         autoresize: true
     });
@@ -148,14 +172,95 @@ function load() {
  */
 function load_cb(data_id) {
     // place your code here
-    m_app.enable_camera_controls(false, false, false, m_cont.get_canvas());
+
+
+    // m_app.enable_camera_controls(false, false, false, m_cont.get_canvas()); ПРЕДЫДУЩИЙ
+    m_app.enable_camera_controls(false, false, false, null, true);
+    var camobj = m_scenes.get_active_camera();
+    init_camera_animation(camobj);
+
+
+
     init_controls();
+
+
+
+
 
      // var spawner = m_scenes.get_object_by_name("spawner");
      // m_trans.get_translation(spawner, spawner_pos);
     
  
 }
+
+function start_camera_animation(camobj, pos_view, pos_target) {
+    // retrieve camera current position
+    m_cam.target_get_pivot(camobj, _cam_anim.current_target);
+    m_trans.get_translation(camobj, _cam_anim.current_eye);
+
+    // set camera starting position
+    m_vec3.copy(_cam_anim.current_target, _cam_anim.starting_target);
+    m_vec3.copy(_cam_anim.current_eye, _cam_anim.starting_eye);
+
+    // set camera final position
+    m_vec3.copy(pos_view, _cam_anim.final_eye);
+    m_vec3.copy(pos_target, _cam_anim.final_target);
+
+    // start animation
+    _delta_target = ANIM_TIME;
+    _cam_anim.timeline = m_time.get_timeline();
+}
+
+function init_camera_animation(camobj) {
+
+    var t_sensor = m_ctl.create_timeline_sensor();
+    var e_sensor = m_ctl.create_elapsed_sensor();
+
+    var logic_func = function(s) {
+        // s[0] = m_time.get_timeline() (t_sensor value)
+        return s[0] - _cam_anim.timeline < ANIM_TIME;
+    }
+
+    var cam_move_cb = function(camobj, id, pulse) {
+
+        if (pulse == 1) {
+            if (_anim_stop) {
+                _cam_anim.timeline = -ANIM_TIME;
+                return;
+            }
+
+            m_app.disable_camera_controls();
+
+            // elapsed = frame time (e_sensor value)
+            var elapsed = m_ctl.get_sensor_value(camobj, id, 1);
+            var delta = elapsed / ANIM_TIME;
+
+            m_vec3.subtract(_cam_anim.final_eye, _cam_anim.starting_eye, _vec3_tmp);
+            m_vec3.scaleAndAdd(_cam_anim.current_eye, _vec3_tmp, delta, _cam_anim.current_eye);
+
+            _delta_target -= elapsed;
+            delta = 1 - _delta_target * _delta_target / (ANIM_TIME * ANIM_TIME);
+            m_vec3.subtract(_cam_anim.final_target, _cam_anim.starting_target, _vec3_tmp);
+            m_vec3.scaleAndAdd(_cam_anim.starting_target, _vec3_tmp, delta, _cam_anim.current_target);
+
+            m_cam.target_set_trans_pivot(camobj, _cam_anim.current_eye, _cam_anim.current_target);
+
+        } else {
+            m_app.enable_camera_controls(false, false, false, null, true);
+            if (!_anim_stop)
+                m_cam.target_set_trans_pivot(camobj, _cam_anim.final_eye, 
+                        _cam_anim.final_target);
+            else
+                _anim_stop = false;
+        }
+    }
+
+    m_ctl.create_sensor_manifold(camobj, "CAMERA_MOVE", m_ctl.CT_CONTINUOUS,
+            [t_sensor, e_sensor], logic_func, cam_move_cb);
+}
+
+
+
 
 function init_controls() {
     var controls_elem = document.getElementById("controls-container");
@@ -192,6 +297,7 @@ function init_controls() {
     });
      document.getElementById("load-5").addEventListener("click", function(e) {
         m_data.load("assets/mini-windows-2.json", loaded_cb, null, null, true);
+      
     });
     document.getElementById("load-6").addEventListener("click", function(e) {
         m_data.load("assets/mini-windows-1.json", loaded_cb, null, null, true);
@@ -237,7 +343,7 @@ function init_controls() {
      
     }
 function init_buttons() {
-    var ids = ["delete", "rot-ccw", "rot-cw"];
+    var ids = ["delete"]; //"rot-ccw", "rot-cw"];
 
     for (var i = 0; i < ids.length; i++) {
         var id = ids[i];
@@ -267,26 +373,55 @@ function loaded_cb(data_id) {
     for (var i = 0; i < objs.length; i++) {
         var obj = objs[i];
 
-        if (m_phy.has_physics(obj)) {
-            m_phy.enable_simulation(obj);
+         var target = obj;
+         var eye = m_scenes.get_object_by_name("Camera");
 
-             var sensor_col = m_ctl.create_collision_sensor(obj, "FURNITURE");
-             var sensor_sel = m_ctl.create_selection_sensor(obj, true);
+    if (eye && target) {
+        var camobj = m_scenes.get_active_camera();
+        var pos_view = m_trans.get_translation(eye);
+        var pos_target = m_trans.get_translation(target);
+        start_camera_animation(camobj, pos_view, pos_target);
+    }
 
-            if (obj == _selected_obj)
-                m_ctl.set_custom_sensor(sensor_sel, 1);
+	var anim_id = m_time.animate(m_cam.get_fov(camobj), 0.5, 2000, function(val){
+        m_cam.set_fov(camobj, val);
+    });
+     m_time.clear_animation(anim_id);
+     anim_id = m_time.animate(m_cam.get_fov(camobj), 0.5, 2000, function(val){
+     m_cam.set_fov(camobj, val);
+        });
 
-            m_ctl.create_sensor_manifold(obj, "COLLISION", m_ctl.CT_CONTINUOUS, 
-                    [sensor_col, sensor_sel], logic_func, trigger_outline);
+    // var cam = m_scs.get_object_by_name('Camera');
+    // // anim_id;
 
-            // // spawn appended object at a certain position
-            var obj_parent = m_obj.get_parent(obj);
-            if (obj_parent && m_obj.is_armature(obj_parent))
-                // translate the parent (armature) of the animated object
-                m_trans.set_translation_v(obj_parent, spawner_pos);
-            else
-                m_trans.set_translation_v(obj, spawner_pos);
-        }
+    // var anim_id = m_time.animate(m_cam.get_fov(cam), 0.2, 2000, function(val){
+    //         m_cam.set_fov(cam, val);
+    //     }); 
+    //  m_time.clear_animation(anim_id);
+    //   anim_id = m_time.animate(m_cam.get_fov(camobj), 0.2, 2000, function(val){
+    //         m_cam.set_fov(camobj, val);
+    //     });
+
+        // if (m_phy.has_physics(obj)) {
+        //     m_phy.enable_simulation(obj);
+
+        //      var sensor_col = m_ctl.create_collision_sensor(obj, "FURNITURE");
+        //      var sensor_sel = m_ctl.create_selection_sensor(obj, true);
+
+        //     if (obj == _selected_obj)
+        //         m_ctl.set_custom_sensor(sensor_sel, 1);
+
+        //     m_ctl.create_sensor_manifold(obj, "COLLISION", m_ctl.CT_CONTINUOUS, 
+        //             [sensor_col, sensor_sel], logic_func, trigger_outline);
+
+        //     // // spawn appended object at a certain position
+        //     var obj_parent = m_obj.get_parent(obj);
+        //     if (obj_parent && m_obj.is_armature(obj_parent))
+        //         // translate the parent (armature) of the animated object
+        //         m_trans.set_translation_v(obj_parent, spawner_pos);
+        //     else
+        //         m_trans.set_translation_v(obj, spawner_pos);
+        // }
 
         // show appended object
         if (m_obj.is_mesh(obj))
@@ -298,17 +433,18 @@ function loaded_cb(data_id) {
 //     return s[1];
 // }
 
-function trigger_outline(obj, id, pulse) {
-    if (pulse == 1) {
-        // change outline color according to the  
-        // first manifold sensor (collision sensor) status
-        var has_collision = m_ctl.get_sensor_value(obj, id, 0);
-        if (has_collision)
-            m_scenes.set_outline_color(OUTLINE_COLOR_ERROR);
-        else
-            m_scenes.set_outline_color(OUTLINE_COLOR_VALID);
-    }
-}
+// function trigger_outline(obj, id, pulse) {
+//     if (pulse == 1) {
+//         // change outline color according to the  
+//         // first manifold sensor (collision sensor) status
+
+//         var has_collision = m_ctl.get_sensor_value(obj, id, 0);
+//         if (has_collision)
+//             m_scenes.set_outline_color(OUTLINE_COLOR_ERROR);
+//         else
+//             m_scenes.set_outline_color(OUTLINE_COLOR_VALID);
+//     }
+// }
 
 // function rotate_object(obj, angle) {
 //     var obj_parent = m_obj.get_parent(obj);
@@ -344,11 +480,10 @@ function main_canvas_down(e) {
         if (obj)
             m_scenes.apply_outline_anim(obj, 1, 1, 0);
 
-        _selected_obj = obj;
+      _selected_obj = obj;
     }
 
-   
-     
+
     
 
     // calculate delta in viewport coordinates
