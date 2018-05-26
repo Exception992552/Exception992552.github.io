@@ -322,6 +322,16 @@ function init_controls() {
     m_data.load("assets/aside-1.json", loaded_cb, null, null, true);
     m_data.load("assets/aside-2.json", loaded_cb, null, null, true);
     });
+     document.getElementById("load-21").addEventListener("click", function(e) {
+    m_data.load("assets/cupboard-2.json", loaded_cb, null, null, true);
+    });
+
+    document.getElementById("load-22").addEventListener("click", function(e) {
+    m_data.load("assets/left-aside.json", loaded_cb, null, null, true);
+    });
+    document.getElementById("load-23").addEventListener("click", function(e) {
+    m_data.load("assets/right-aside.json", loaded_cb, null, null, true);
+    });
 
 
      document.getElementById("delete").addEventListener("click", function(e) {
