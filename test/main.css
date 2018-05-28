@@ -1,0 +1,120 @@
+#main_canvas_container {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+ overflow-x: hidden;
+}
+
+#buttons_container {
+display: -webkit-flex;
+display: -moz-flex;
+display: -ms-flex;
+display: -o-flex;
+display: flex;
+-webkit-flex-direction: column;
+-moz-flex-direction: column;
+-ms-flex-direction: column;
+-o-flex-direction: column;
+flex-direction: column;
+height: inherit;
+justify-content: space-around;
+-ms-align-items: center;
+align-items: center;
+max-width: 100px;
+}
+.grid {
+	display:grid;
+	grid-template-columns:80px;
+	grid-template-rows:80px 80px 80px 80px;
+	grid-row-gap: 5px;
+	z-index: 9999;
+	position: absolute;
+	left: 19px;
+    top: 68px;
+}
+.button_container {
+	width: 80px;
+	height: 80px;
+	border:2px solid #ccc;
+	z-index: 99999;
+	font-family: "Areal";
+	font-size: 12px;
+	cursor:pointer;
+
+}
+
+
+.button-background {
+	
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	width: 80px;
+	height: 80px;
+	
+
+}
+.container-main-button {
+	width: inherit;
+	height: 60px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-ms-align-items: center;
+	align-items: center;
+}
+
+
+
+#bg1 {
+	
+	background-image: url("assets/bg1.png");
+}
+#bg2 {
+	
+	background-image: url("assets/bg2.png");
+}
+#bg3 {
+	
+	background-image: url("assets/bg3.png");
+}
+#bg4 {
+	
+	background-image: url("assets/bg4.png");
+}
+
+.button_container:hover {
+     background:#2EE47D ;
+     opacity: .4;
+     transition: all 0.5s ease;
+     color: white;   
+ }
+
+  .button{
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 2px 30px;
+  margin: 8px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 40px #2EE47D inset, 0 0 0 0 #2EE47D;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  transition: .15s ease-in-out;
+  cursor:pointer;
+  font-size: 13px;
+  z-index: 999999;
+  position: absolute;
+
+  }
+ .button:hover {
+ box-shadow: 0 0 10px 0 #2EE47D inset, 0 0 10px 4px #2EE47D;
+  color: #2EE47D;
+ }

@@ -24,8 +24,9 @@
 	<div id="main_canvas_container"></div>
 	<div id="controls-container" style="display: block;">
    	<div class="button-container flex-button">
-   	<a href="/index.html" class="button-back">Назад</a>
-	<a class="toggle-table">Стол</a>
+   	<a href="/index.html" class="button-back" >Назад</a>
+
+	<a class="toggle-table" id="toggle">Стол</a>
 	<div class="toggle-block-table" style="display: none;">
    	<a id="load-1"  class="button data-button-small">Cтолешница</a>
     <a id="load-2"  class="button data-button-small">Ножки 1</a>
@@ -34,18 +35,30 @@
     <a id="load-four" class="button data-button-small">Узор</a>
     <a id="load-five" class="button data-button-small">Ножки 4</a>
 	</div>
-	<a class="toggle-cupboard">Шкаф</a>
-	<div class="toggle-block-cupboard" style="display: none;">
+	<a class="toggle-cupboard" id= "toggle">Шкаф</a>
+	<div class="toggle-block-cupboard" style="display: none;" id="block-toggle">
     <a id="load-4"  class="button data-button-small">Основание</a>
+
+  <a class="toggle-window" id="toggle">Верхние дверцы</a>
+
+  <div class="toggle-block-window" style="display: none;" id="block-toggle">
     <a id="load-5"  class="button data-button-small">Окна 1</a>
     <a id="load-6"  class="button data-button-small">Окна 2</a>
+  </div>
+
+  <a class="toggle-doors" id="toggle">Нижние дверцы</a>
+
+   <div class="toggle-block-doors" style="display: none;" id="block-toggle">
     <a id="load-7"  class="button data-button-small">Дверцы 1</a>
     <a id="load-8"  class="button data-button-small">Дверцы 2</a>
+</div>
+
+
     <a id="load-9"  class="button data-button-small">Пять полок</a>
     <a id="load-10"  class="button data-button-small">Футляр 1</a>
    	</div>
-   	<a class="toggle-cupboard-2">Шкаф-2</a>
-   	<div class="toggle-block-cupboard-2" style="display: none;">
+   	<a class="toggle-cupboard-2" id="toggle">Шкаф-2</a>
+   	<div class="toggle-block-cupboard-2" style="display: none;" id="block-toggle">
     <a id="load-20"  class="button data-button-small">Основание</a>
     <a id="load-21"  class="button data-button-small">Центральная часть</a>
     <a id="load-22"  class="button data-button-small">Вариация 1</a>
@@ -55,8 +68,6 @@
   	</div>
   	<div class="operation-conteiner-button flex-button">
  	<a id="delete"  class="button">Delete</a>
-  	<a id="rot-ccw" class="button">rotate</a>
-  	<a id="rot-cw"  class="button">rotate</a>
  	</div>
 			<footer class="footer">	
 	

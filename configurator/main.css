@@ -5,9 +5,19 @@
 .flex-button {
   display: flex;
   align-items: center;
-
 }
- .button {
+
+.disabled {
+  width: 200px;
+  height: 35px;
+  background-color: #cff;
+  opacity: .8;
+  z-index: 999999;
+  position: absolute;
+  left: 0;
+}
+.button {
+
   text-decoration: none;
   outline: none;
   display: inline-block;
@@ -17,7 +27,7 @@
   border-radius: 45px;
   margin: 10px 20px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
+  font-size: 9px;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 1.6px;
@@ -34,9 +44,18 @@
      color: white;
      transform: translateY(-7px);
   }
+   #block-toggle {
+      display: flex;
+      /*justify-content: center;*/
+      align-items: center;
+      -webkit-flex-direction: column;
+      -moz-flex-direction: column;
+      -ms-flex-direction: column;
+      -o-flex-direction: column;
+      flex-direction: column;
+     }
 
-
-  .toggle-table,.toggle-cupboard,.toggle-cupboard-2{
+  #toggle{
   text-decoration: none;
   outline: none;
   display: inline-block;
@@ -50,8 +69,9 @@
   color: white;
   transition: .15s ease-in-out;
   cursor:pointer;
+  font-size: 13px;
   }
- .toggle-table:hover,.toggle-cupboard:hover,.toggle-cupboard-2:hover  {
+ #toggle:hover {
  box-shadow: 0 0 10px 0 #2EE47D inset, 0 0 10px 4px #2EE47D;
   color: #2EE47D;
  }
@@ -77,6 +97,7 @@
      	flex-direction: column;
      	align-items: center;
      }
+  
 .operation-conteiner-button {
   position: absolute;
   width: 100%;
