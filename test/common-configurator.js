@@ -19,13 +19,14 @@ var m_anim      = require("animation");
 var m_preloader = require("preloader");
 var m_obj       = require("objects");
 var m_phy       = require("physics");
-
+var m_mat = require("material");
+var m_ctl       = require("controls");
+var cam_anim    = require("camera_anim");
 // detect application mode
 var DEBUG = (m_version.type() == "DEBUG");
 
 // automatically detect assets path
 var APP_ASSETS_PATH = "assets/";
-
 
 
 var _prev_mouse_x = 0;
@@ -49,7 +50,7 @@ var _btn_description = [];
 var _lst_loaded_models = [];
 
 
-
+var _vec3_tmp = new Float32Array(3);
   
 
 
@@ -97,7 +98,7 @@ function init_cb(canvas_elem, success) {
     }
 
     m_preloader.create_preloader();
-     canvas_elem.addEventListener("mousedown", main_canvas_down);
+    canvas_elem.addEventListener("mousedown", main_canvas_down);
     canvas_elem.addEventListener("touchstart", main_canvas_down);
 
     // ignore right-click on the canvas element
@@ -127,6 +128,7 @@ function init_cb(canvas_elem, success) {
 /**
  * load the scene data
  */
+
 function load() {
     m_data.load(APP_ASSETS_PATH + "my_project.json", load_cb, preloader_cb);
     init_interface(); 
@@ -135,7 +137,8 @@ function load() {
 
 function load_cb(data_id, success) {   
     m_app.enable_camera_controls();
-    // console.log("success: ", success)
+   
+
 }
 
 function is_ie11() {
@@ -166,6 +169,15 @@ function init_interface(){
             var id = m_scenes.get_object_data_id(_selected_obj);
             m_data.unload(id);
             _selected_obj = null;
+        }
+    })
+        document.getElementById("inherit").addEventListener("click", function(e) {
+        if (_selected_obj) {
+            
+            var id = m_scenes.get_object_data_id(_selected_obj);
+            // var cube = m_scenes.get_all_objects("Cube.001",2);
+            // m_mat.inherit_material(cube, "Material", id, "MyMaterial.001");
+           
         }
     })
 
@@ -262,8 +274,12 @@ function main_canvas_down(e) {
 
       _selected_obj = obj;
     }
+///////////////////////////////////////////////
+    if (_selected_obj) {
 
+  
 
+    }
     
 
     // calculate delta in viewport coordinates
