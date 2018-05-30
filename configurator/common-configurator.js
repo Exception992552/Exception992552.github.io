@@ -375,23 +375,7 @@ function loaded_cb(data_id) {
      anim_id = m_time.animate(m_cam.get_fov(camobj), 0.5, 2000, function(val){
      m_cam.set_fov(camobj, val);
         });
-
-
-       
-                m_scenes.show_object(obj);
-        
-
-        // if (m_obj.is_mesh(obj)) {
-        //     _current_model = m_scenes.show_object(obj);
-        // } 
-            // m_scenes.show_object(obj);
-        
-
-            // _file_loaded = true; 
-  
-      
-       
-
+m_scenes.show_object(obj);
     }}
      
     
