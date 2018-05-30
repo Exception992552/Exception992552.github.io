@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "show_trigger": 1,
+      "name_btn": "Варіант 1",
+      "descr": "Плеврит – воспаление плевры, возникающее в результате отложения на ее поверхности фибрина, серозной жидкости или гнойного экссудата. Плевра располагается вокруг каждого легкого, состоит из двух листков (висцеральный и париетальный)",
+      "name_file": "Table-1.json"
+    },
+     {
+      "show_trigger": 1,
+      "name_btn": "Варіант 1",
+      "descr": "Плеврит",
+      "name_file": "item-4.json"
+    } 
+  ],
+  "question": "If you see this you should probably fill the question field in data/info.json"
+}

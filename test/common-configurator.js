@@ -240,7 +240,7 @@ function button_index() {
 	}
 	if(_file_loaded){
 		_file_loaded = false;
-		if(_current_model == null){
+		if(_current_model == null && _file_names[this.id]){
 			_current_model = m_data.load(_file_names[this.id], loaded_cb, null, true);		
 		}else{
 			m_data.unload(_current_model);

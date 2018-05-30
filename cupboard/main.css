@@ -36,6 +36,10 @@ max-width: 100px;
 }
 .grid {
 	display:grid;
+  display: -webkit-grid;
+  display: -moz-grid;
+  display: -ms-grid;
+  display: -o-grid;
 	grid-template-columns:80px;
 	grid-template-rows:80px 80px 80px 80px;
 	grid-row-gap: 5px;
