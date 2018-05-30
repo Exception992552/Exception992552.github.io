@@ -17,6 +17,12 @@
       "name_btn": "Варіант 3",
       "descr": "111",
       "name_file": "item-3.json"
+    },
+      {
+      "show_trigger": 1,
+      "name_btn": "Варіант 4",
+      "descr": "111",
+      "name_file": "item-4.json"
     } 
   ],
   "question": "If you see this you should probably fill the question field in data/info.json"
