@@ -1,5 +1,5 @@
 
-$(document).ready(function(){
+// $(document).ready(function(){
 
 $(window).on('load',function(){
 	$('.preloader').delay(3000).fadeOut('slow');
@@ -9,7 +9,7 @@ $(".link-menu").mPageScroll2id();
 $(".hamburger").on('click', function(){
 $(this).toggleClass('active');
 });
-});
+// });
 
 "use strict"
 
