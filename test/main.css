@@ -27,9 +27,9 @@ max-width: 100px;
 .grid {
 	display:grid;
   display: -webkit-grid;
-  display: -moz-grid;
+  /*display: -moz-grid;*/
   display: -ms-grid;
-  display: -o-grid;
+  /*display: -o-grid;*/
 	grid-template-columns:80px;
 	grid-template-rows:80px 80px 80px 80px;
 	grid-row-gap: 5px;
@@ -57,9 +57,9 @@ max-width: 100px;
   left: 0;
   justify-content: center;
   display: -webkit-flex;
-  display: -moz-flex;
+  /*display: -moz-flex;*/
   display: -ms-flex;
-  display: -o-flex;
+  /*display: -o-flex;*/
   display: flex;
   -ms-align-items: center;
   align-items: center;

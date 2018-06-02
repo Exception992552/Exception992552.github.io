@@ -9,6 +9,13 @@ $(".link-menu").mPageScroll2id();
 $(".hamburger").on('click', function(){
 $(this).toggleClass('active');
 });
+
+$(".slider-tutorial").slick({
+   nextArrow:'<div class="slick-next"></div>',
+   prevArrow:'<div class="slick-prev"></div>'
+
+});
+
 // });
 
 "use strict"

@@ -9,14 +9,14 @@
 
 #buttons_container {
 display: -webkit-flex;
-display: -moz-flex;
+/*display: -moz-flex;*/
 display: -ms-flex;
-display: -o-flex;
+/*display: -o-flex;*/
 display: flex;
 -webkit-flex-direction: column;
--moz-flex-direction: column;
+/*-moz-flex-direction: column;*/
 -ms-flex-direction: column;
--o-flex-direction: column;
+/*-o-flex-direction: column;*/
 flex-direction: column;
 height: inherit;
 justify-content: space-around;
@@ -37,9 +37,9 @@ max-width: 100px;
 .grid {
 	display:grid;
   display: -webkit-grid;
-  display: -moz-grid;
+  /*display: -moz-grid;*/
   display: -ms-grid;
-  display: -o-grid;
+  /*display: -o-grid;*/
 	grid-template-columns:80px;
 	grid-template-rows:80px 80px 80px 80px;
 	grid-row-gap: 5px;
