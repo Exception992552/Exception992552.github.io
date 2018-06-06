@@ -16,6 +16,11 @@ $(".slider-tutorial").slick({
 
 });
 
+$(".features").on('click', function() {
+    $(".features-container").toggleClass('container-origin');
+  
+});
+
 // });
 
 "use strict"

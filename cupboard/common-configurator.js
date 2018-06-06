@@ -27,7 +27,7 @@ var DEBUG = (m_version.type() == "DEBUG");
 var APP_ASSETS_PATH = "assets/";
 
 
-
+var _vec3_tmp = new Float32Array(3);
 var _prev_mouse_x = 0;
 var _prev_mouse_y = 0;
 

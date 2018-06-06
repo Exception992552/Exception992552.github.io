@@ -1,18 +1,27 @@
+/*.main_area {
+  width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+}*/
 #main_canvas_container {
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
  overflow-x: hidden;
 }
-
+.show {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex!important;
+}
 #buttons_container {
-display: -webkit-flex;
-display: -moz-flex;
-display: -ms-flex;
-display: -o-flex;
-display: flex;
+ transition: all 0.5s ease;
+display: grid;
 -webkit-flex-direction: column;
 -moz-flex-direction: column;
 -ms-flex-direction: column;
@@ -24,11 +33,15 @@ justify-content: space-around;
 align-items: center;
 max-width: 100px;
 }
+.grid-show {
+  display:grid!important;
+}
 .grid {
-	display:grid;
-  display: -webkit-grid;
+  display: grid;
+	/*display:grid;*/
+  /*display: -webkit-grid;*/
   /*display: -moz-grid;*/
-  display: -ms-grid;
+  /*display: -ms-grid;*/
   /*display: -o-grid;*/
 	grid-template-columns:80px;
 	grid-template-rows:80px 80px 80px 80px;

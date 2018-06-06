@@ -19,13 +19,20 @@ var m_anim      = require("animation");
 var m_preloader = require("preloader");
 var m_obj       = require("objects");
 var m_phy       = require("physics");
+var m_vec3      = require("vec3");
 
 // detect application mode
 var DEBUG = (m_version.type() == "DEBUG");
 
 // automatically detect assets path
 var APP_ASSETS_PATH = "assets/";
-
+var _vec3_tmp = new Float32Array(3);
+var _obj_delta_xy = new Float32Array(2);
+var spawner_pos = new Float32Array(3);
+var _vec3_tmp = new Float32Array(3);
+var _vec3_tmp2 = new Float32Array(3);
+var _vec3_tmp3 = new Float32Array(3);
+var _vec4_tmp = new Float32Array(4);
 
 
 var _prev_mouse_x = 0;
@@ -134,7 +141,8 @@ function load() {
 
 
 function load_cb(data_id, success) {   
-    m_app.enable_camera_controls();
+    // m_app.enable_camera_controls();
+     m_app.enable_camera_controls(false, false, false, null, true);
     // console.log("success: ", success)
 }
 

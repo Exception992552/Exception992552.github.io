@@ -22,12 +22,13 @@ var m_phy       = require("physics");
 var m_mat = require("material");
 var m_ctl       = require("controls");
 var cam_anim    = require("camera_anim");
+var m_math      = require("math");
 // detect application mode
 var DEBUG = (m_version.type() == "DEBUG");
 
 // automatically detect assets path
 var APP_ASSETS_PATH = "assets/";
-
+var _vec3_tmp = new Float32Array(3);
 
 var _prev_mouse_x = 0;
 var _prev_mouse_y = 0;
@@ -51,6 +52,10 @@ var _lst_loaded_models = [];
 
 
 var _vec3_tmp = new Float32Array(3);
+var _vec3_tmp2 = new Float32Array(3);
+var _vec3_tmp3 = new Float32Array(3);
+var _vec4_tmp = new Float32Array(4);
+var _pline_tmp = m_math.create_pline();
   
 
 
@@ -100,7 +105,8 @@ function init_cb(canvas_elem, success) {
     m_preloader.create_preloader();
     canvas_elem.addEventListener("mousedown", main_canvas_down);
     canvas_elem.addEventListener("touchstart", main_canvas_down);
-
+    window.onresize = m_cont.resize_to_container;
+    m_cont.resize_to_container();
     // ignore right-click on the canvas element
     canvas_elem.oncontextmenu = function(e) {
         e.preventDefault();
@@ -161,6 +167,11 @@ function init_interface(){
     }
      document.getElementById("load-1").addEventListener("click", function(e) {
         m_data.load("assets/Table-1.json", null, null, true);
+        // var cls = document.getElementsByClassName('buttons_container');
+        // var grid = document.getElementsByClassName('grid');
+        // cls.classList.add('show');
+        // grid.classList.add('show-grid');
+('');
     });
 
      document.getElementById("delete").addEventListener("click", function(e) {
@@ -274,13 +285,7 @@ function main_canvas_down(e) {
 
       _selected_obj = obj;
     }
-///////////////////////////////////////////////
-    if (_selected_obj) {
 
-  
-
-    }
-    
 
     // calculate delta in viewport coordinates
     if (_selected_obj) {

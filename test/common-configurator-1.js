@@ -65,7 +65,7 @@ function loadJSON(callback) {
 
     init_interface(); 
 
-var id_button = 0;
+var id_button = 5;
 function init_interface(){
     var controls_container = document.getElementById("buttons_container");
  
