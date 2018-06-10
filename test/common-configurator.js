@@ -186,8 +186,8 @@ function init_interface(){
         if (_selected_obj) {
             
             var id = m_scenes.get_object_data_id(_selected_obj);
-            // var cube = m_scenes.get_all_objects("Cube.001",2);
-            // m_mat.inherit_material(cube, "Material", id, "MyMaterial.001");
+            var cube = m_scenes.get_all_objects("Cube",2);
+            m_mat.inherit_material(cube, "Material.002", id, "Material.001");
            
         }
     })
@@ -257,6 +257,8 @@ function button_index() {
 			m_data.unload(_current_model);
 			_current_model = m_data.load(_file_names[this.id], loaded_cb, null, true);
 		}
+         var description_text = document.getElementById("description_text");
+        description_text.textContent = _btn_description[this.id]
 	}
 }
 /**

@@ -55,18 +55,15 @@ var _lst_loaded_models = [];
 
 
 function loadJSON(callback) {   
-
     var xobj = new XMLHttpRequest();
-        // xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'assets/info.json', true); // Replace 'my_data' with the path to your file
+         xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'assets/info.json', true);
     xobj.onreadystatechange = function () {
           if (xobj.readyState == 4 && xobj.status == "200") {
             callback(xobj.response);
-          }
+       }
     };
     xobj.send(null);
-     
- 
  }
 
 
