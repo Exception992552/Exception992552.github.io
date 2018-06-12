@@ -17,7 +17,13 @@
       "name_btn": "Варіант 3",
       "descr": "Симетричні бічні частини з нижніми дверцятами і полицею. Вага: 25кг. Матеріал: дерево та скло Кількість елементів: 2.",
       "name_file": "item-3.json"
-    } 
+    },
+      {
+      "show_trigger": 1,
+      "name_btn": "Варіант 4",
+      "descr": "Симетричні бічні частини з великими дверима. Вага: 36кг. Матеріал: дерево Кількість елементів: 2.",
+      "name_file": "item-4.json"
+    }  
   ],
   "question": "If you see this you should probably fill the question field in data/info.json"
 }
