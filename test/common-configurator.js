@@ -183,13 +183,36 @@ function init_interface(){
         }
     })
         document.getElementById("inherit").addEventListener("click", function(e) {
-        if (_selected_obj) {
+         if (_selected_obj) {
             
-            var id = m_scenes.get_object_data_id(_selected_obj);
-            var cube = m_scenes.get_all_objects("Cube",2);
-            m_mat.inherit_material(cube, "Material.002", id, "Material.001");
+             var cube = m_scenes.get_object_by_name("Cube");
+             m_mat.inherit_material(cube, "stack_of_glass", _selected_obj , "Material.001");
+             var description_text = document.getElementById("description_text");
+             description_text.textContent = "Вага: 21кг. Матеріал: Скло Кількість елементів: 4 Ціна:800₴";       
+
            
-        }
+         }
+    })
+    
+      document.getElementById("inherit1").addEventListener("click", function(e) {
+         if (_selected_obj) {
+            // console.log(_selected_obj);
+            var cube = m_scenes.get_object_by_name("Cube.002");
+             m_mat.inherit_material(cube, "chrome", _selected_obj , "Material.001");
+             var description_text = document.getElementById("description_text");
+             description_text.textContent = "Вага: 45кг. Матеріал: Мармур Кількість елементів: 4 Ціна:2000₴";
+           
+         }
+    })  
+      document.getElementById("inherit2").addEventListener("click", function(e) {
+         if (_selected_obj) {
+            // console.log(_selected_obj);
+            var cube = m_scenes.get_object_by_name("Cube.001");
+             m_mat.inherit_material(cube, "Material.002", _selected_obj , "Material.001");
+             var description_text = document.getElementById("description_text");
+             description_text.textContent = "Вага: 25кг. Матеріал: Дерево Кількість елементів: 4 Ціна:1000₴";
+           
+         }
     })
 
     init_buttons();

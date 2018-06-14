@@ -52,7 +52,12 @@ max-width: 100px;
   background-color: rgba(46, 228, 125, .3);
 
 }
-
+#inherit1 {
+  background-image: url(assets/free-marble-texture3.jpg);
+}
+#inherit2 {
+  background-image: url(assets/40225df5772f28239593f7571406b34e.jpg);
+}
 .grid-show {
   display:grid!important;
 }
