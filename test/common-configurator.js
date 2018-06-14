@@ -167,11 +167,9 @@ function init_interface(){
     }
      document.getElementById("load-1").addEventListener("click", function(e) {
         m_data.load("assets/Table-1.json", null, null, true);
-        // var cls = document.getElementsByClassName('buttons_container');
-        // var grid = document.getElementsByClassName('grid');
-        // cls.classList.add('show');
-        // grid.classList.add('show-grid');
-('');
+         var description_text = document.getElementById("description_text");
+             description_text.textContent = "Вага: 21кг. Матеріал: Дерево Кількість елементів: 1 Ціна:800₴";  
+       
     });
 
      document.getElementById("delete").addEventListener("click", function(e) {
@@ -188,7 +186,7 @@ function init_interface(){
              var cube = m_scenes.get_object_by_name("Cube");
              m_mat.inherit_material(cube, "stack_of_glass", _selected_obj , "Material.001");
              var description_text = document.getElementById("description_text");
-             description_text.textContent = "Вага: 21кг. Матеріал: Скло Кількість елементів: 4 Ціна:800₴";       
+             description_text.textContent = "Вага: 13кг. Матеріал: Скло Ціна:800₴";       
 
            
          }
@@ -200,7 +198,7 @@ function init_interface(){
             var cube = m_scenes.get_object_by_name("Cube.002");
              m_mat.inherit_material(cube, "chrome", _selected_obj , "Material.001");
              var description_text = document.getElementById("description_text");
-             description_text.textContent = "Вага: 45кг. Матеріал: Мармур Кількість елементів: 4 Ціна:2000₴";
+             description_text.textContent = "Вага: 45кг. Матеріал: Мармур Ціна:2000₴";
            
          }
     })  
@@ -210,7 +208,7 @@ function init_interface(){
             var cube = m_scenes.get_object_by_name("Cube.001");
              m_mat.inherit_material(cube, "Material.002", _selected_obj , "Material.001");
              var description_text = document.getElementById("description_text");
-             description_text.textContent = "Вага: 25кг. Матеріал: Дерево Кількість елементів: 4 Ціна:1000₴";
+             description_text.textContent = "Вага: 25кг. Матеріал: Дерево Ціна:1000₴";
            
          }
     })
